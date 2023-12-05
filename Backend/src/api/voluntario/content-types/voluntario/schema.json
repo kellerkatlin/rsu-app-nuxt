@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "voluntarios",
+  "info": {
+    "singularName": "voluntario",
+    "pluralName": "voluntarios",
+    "displayName": "Voluntario",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "Apellido": {
+      "type": "string"
+    },
+    "eventos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::evento.evento",
+      "inversedBy": "voluntarios"
+    }
+  }
+}

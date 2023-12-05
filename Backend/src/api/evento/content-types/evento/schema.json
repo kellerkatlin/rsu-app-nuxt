@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "eventos",
+  "info": {
+    "singularName": "evento",
+    "pluralName": "eventos",
+    "displayName": "evento"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nombre": {
+      "type": "string"
+    },
+    "voluntarios": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::voluntario.voluntario",
+      "mappedBy": "eventos"
+    }
+  }
+}
