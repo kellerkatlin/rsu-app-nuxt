@@ -186,6 +186,7 @@ const load = (index) => {
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/layout/styles/theme/lara-light-indigo/theme.css';
 .google {
     background: linear-gradient(to left, var(--purple-600) 50%, var(--purple-700) 50%);
     background-size: 200% 100%;

@@ -24,7 +24,10 @@ async function loadVoluntarios(page) {
         console.log(pagination.value.page);
         const response = await VoluntariosService.getVoluntarios(pagination.value.page, pagination.value.pageSize);
         voluntarios.value = response.data;
-        console.log(voluntarios.value);
+        if (voluntario.value && voluntario.value.attributes.eventoId) {
+            selectedEvent.value = voluntario.value.attributes.eventoId;
+        }
+        console.log(response.data);
     } catch (error) {
         console.error('An error occurred:', error);
         toast.add({
@@ -80,8 +83,12 @@ const confirmDeleteVoluntario = async (voluntarioId) => {
     deleteVoluntarioDialog.value = true;
 };
 const createVoluntario = async () => {
-    await VoluntariosService.createVoluntario({ data: voluntario.value.attributes });
+    const data = {
+        ...voluntario.value.attributes,
+        eventoId: selectedEvent.value
+    };
 
+    await VoluntariosService.createVoluntario({ data });
     voluntarioDialog.value = false;
     pagination.value.pageSize = pagination.value.pageSize + 1;
     await loadVoluntarios(pagination.value.page, pagination.value.pageSize);
@@ -92,19 +99,14 @@ const createVoluntario = async () => {
         life: 3000
     });
 };
+
 const updateVoluntario = async () => {
     const data = {
         ...voluntario.value.attributes,
-        eventos: {
-            data: [
-                {
-                    id: selectedEvent.value
-                }
-            ]
-        }
+        eventoId: selectedEvent.value
     };
-    console.log(selectedEvent.value);
     await VoluntariosService.updateVoluntario(voluntario.value.id, { data });
+    console.log(data);
     voluntarioDialog.value = false;
     await loadVoluntarios(pagination.value.page, pagination.value.pageSize);
     toast.add({
@@ -115,7 +117,7 @@ const updateVoluntario = async () => {
     });
 };
 
-const deleteProduct = async () => {
+const deleteVoluntario = async () => {
     const res = await VoluntariosService.deleteVoluntario(voluntario.value.id);
     deleteVoluntarioDialog.value = false;
     await loadVoluntarios(pagination.value.page, pagination.value.pageSize);
@@ -145,7 +147,7 @@ const logout = async () => {
                 <Toolbar class="mb-4">
                     <template v-slot:end>
                         <div class="my-2">
-                            <Button label="New" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
+                            <Button label="New" icon="pi pi-plus" class="mr-2 p-button-success" @click="openNew" />
                         </div>
                     </template>
                 </Toolbar>
@@ -194,35 +196,52 @@ const logout = async () => {
                     </Column>
                     <Column field="eventos" header="Evento" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
-                            <span class="p-column-title">Evento</span>
-                            <span v-if="slotProps.data.attributes.eventos && slotProps.data.attributes.eventos.data.length > 0">
-                                {{ slotProps.data.attributes.eventos.data[0].attributes.Nombre }}
+                            <span>
+                                {{ slotProps.data.attributes.eventoId.data && slotProps.data.attributes.eventoId.data.length > 0 ? slotProps.data.attributes.eventoId.data[0].attributes.Nombre : 'No asignado' }}
                             </span>
-                            <span v-else> No asignado </span>
                         </template>
                     </Column>
                     <Column headerStyle="min-width:10rem;">
                         <template #body="slotProps">
-                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editVoluntario(slotProps.data.id)" />
-                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="confirmDeleteVoluntario(slotProps.data.id)" />
+                            <Button icon="pi pi-pencil" class="mr-2 p-button-rounded p-button-success" @click="editVoluntario(slotProps.data.id)" />
+                            <Button icon="pi pi-trash" class="mt-2 p-button-rounded p-button-warning" @click="confirmDeleteVoluntario(slotProps.data.id)" />
                         </template>
                     </Column>
                 </DataTable>
 
-                <Dialog v-if="voluntario" v-model:visible="voluntarioDialog" :modal="true" :style="{ width: '50vw' }" :closable="false">
+                <Dialog v-if="voluntario" v-model:visible="voluntarioDialog" :modal="true" :style="{ width: '60vw' }" :closable="false">
                     <form @submit.prevent="isUpdateOperation ? updateVoluntario() : createVoluntario()">
-                        <div class="field">
-                            <label for="nombre">Nombre</label>
-                            <InputText id="nombre" v-model="voluntario.attributes.Nombre" required="true" autofocus />
+                        <div class="grid mt-3 p-fluid">
+                            <div class="my-3 field col-12 md:col-3">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <span class="p-float-label">
+                                        <InputText id="nombre" v-model="voluntario.attributes.Nombre" type="text" />
+                                        <label for="nombre">Nombre</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="my-3 field col-12 md:col-4">
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <span class="p-float-label">
+                                        <InputText id="apellido" v-model="voluntario.attributes.Apellido" type="text" />
+                                        <label for="apellido">Apellido</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="my-3 field col-12 md:col-4">
+                                <span class="p-float-label">
+                                    <Dropdown id="evento" v-model="selectedEvent" :options="eventos" optionLabel="attributes.Nombre"></Dropdown>
+                                    <label for="evento">Evento</label>
+                                </span>
+                            </div>
                         </div>
-                        <div class="field">
-                            <label for="apellido">Apellido</label>
-                            <Textarea id="apellido" v-model="voluntario.attributes.Apellido" required="true" rows="3" cols="20" />
-                        </div>
-                        <div class="field">
-                            <label for="evento">Evento</label>
-                            <Dropdown id="evento" v-model="selectedEvent" :options="eventos" optionLabel="attributes.Nombre" optionValue="id" filter filterBy="attributes.Nombre" placeholder="Seleccione un evento" />
-                        </div>
+
                         <div class="p-d-flex p-jc-end p-mt-3">
                             <Button label="Cancelar" icon="pi pi-times" class="p-button-text p-mr-2" @click="hideDialog" />
                             <Button v-if="isUpdateOperation" label="Actualizar" icon="pi pi-check" class="p-button-text" type="submit" />
@@ -232,7 +251,7 @@ const logout = async () => {
                 </Dialog>
                 <Dialog v-model:visible="deleteVoluntarioDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
                     <div class="flex align-items-center justify-content-center">
-                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                        <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                         <span v-if="voluntario"
                             >Estas seguro de eliminar el voluntario <b>{{ voluntario.attributes.Nombre }}</b
                             >?</span
@@ -240,7 +259,7 @@ const logout = async () => {
                     </div>
                     <template #footer>
                         <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteVoluntarioDialog = false" />
-                        <Button label="Si" icon="pi pi-check" class="p-button-text" @click="deleteProduct" />
+                        <Button label="Si" icon="pi pi-check" class="p-button-text" @click="deleteVoluntario" />
                     </template>
                 </Dialog>
             </div>
@@ -248,5 +267,5 @@ const logout = async () => {
     </div>
 </template>
 <style scoped lang="scss">
-@import '@/assets/demo/styles/badges.scss';
+@import '@/assets/layout/styles/theme/lara-light-indigo/theme.css';
 </style>

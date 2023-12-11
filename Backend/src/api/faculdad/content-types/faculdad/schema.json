@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faculdads",
+  "info": {
+    "singularName": "faculdad",
+    "pluralName": "faculdads",
+    "displayName": "faculdad"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "text"
+    }
+  }
+}

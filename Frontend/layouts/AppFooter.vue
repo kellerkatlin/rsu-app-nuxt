@@ -12,4 +12,6 @@ const logoUrl = ref('/layout/images/logo-dark.svg');
         <span class="font-medium ml-2">Keller Katlin</span>
     </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/layout/styles/theme/lara-light-indigo/theme.css';
+</style>

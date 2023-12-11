@@ -293,3 +293,6 @@ const searchCountry = (event) => {
         </div>
     </div>
 </template>
+<style scoped>
+@import '@/assets/layout/styles/theme/lara-light-indigo/theme.css';
+</style>

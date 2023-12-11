@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "eventos_institucionales",
+  "info": {
+    "singularName": "eventos-institucionale",
+    "pluralName": "eventos-institucionales",
+    "displayName": "Evento_Institucional",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "presentacion": {
+      "type": "text"
+    },
+    "contenido": {
+      "type": "text"
+    },
+    "requisitos": {
+      "type": "text"
+    },
+    "ubicacion": {
+      "type": "string"
+    },
+    "expositorEncargado": {
+      "type": "string"
+    },
+    "tema": {
+      "type": "string"
+    },
+    "facultadId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::faculdad.faculdad"
+    },
+    "duracion": {
+      "type": "string"
+    },
+    "modalidad": {
+      "type": "string"
+    },
+    "vacantes": {
+      "type": "integer"
+    },
+    "invesion": {
+      "type": "decimal"
+    },
+    "certificacion": {
+      "type": "string"
+    },
+    "fechaInicio": {
+      "type": "datetime"
+    }
+  }
+}

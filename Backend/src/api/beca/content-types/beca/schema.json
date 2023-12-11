@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "becas",
+  "info": {
+    "singularName": "beca",
+    "pluralName": "becas",
+    "displayName": "Beca",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "criterios": {
+      "type": "string"
+    },
+    "usuarioId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "tipoBeca": {
+      "type": "string"
+    },
+    "modtoCobertura": {
+      "type": "decimal"
+    },
+    "actividadId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::actividad.actividad"
+    }
+  }
+}

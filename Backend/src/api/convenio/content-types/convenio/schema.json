@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "convenios",
+  "info": {
+    "singularName": "convenio",
+    "pluralName": "convenios",
+    "displayName": "Convenio",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "entidad": {
+      "type": "string"
+    },
+    "entidadAsoc": {
+      "type": "string"
+    },
+    "objetivoConvenio": {
+      "type": "text"
+    },
+    "inicio": {
+      "type": "date"
+    },
+    "fin": {
+      "type": "date"
+    },
+    "estado": {
+      "type": "string"
+    },
+    "proyectoId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::proyecto.proyecto"
+    }
+  }
+}

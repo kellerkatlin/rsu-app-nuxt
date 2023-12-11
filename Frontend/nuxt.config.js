@@ -6,7 +6,7 @@ export default {
     typescript: false,
     app: {
         head: {
-            title: 'Sakai Vue',
+            title: 'DRSU',
             link: [
                 {
                     id: 'theme-css',
@@ -17,7 +17,7 @@ export default {
             ]
         }
     },
-    modules: ['nuxt-primevue', '@pinia/nuxt'],
+    modules: ['nuxt-primevue', '@pinia/nuxt', '@nuxtjs/tailwindcss'],
     primevue: {
         options: { ripple: true },
         components: {
@@ -41,7 +41,7 @@ export default {
             `
         }
     ],
-    css: ['primeicons/primeicons.css', 'primeflex/primeflex.scss', 'primevue/resources/primevue.min.css', '@/assets/styles.scss'],
+    css: ['@/assets/styles.scss', 'primeicons/primeicons.css', 'primeflex/primeflex.scss', 'primevue/resources/primevue.min.css'],
 
     router: {
         middleware: ['auth']

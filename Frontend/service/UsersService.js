@@ -3,12 +3,12 @@ const API_URL = import.meta.env.VITE_API_URL+  '/users';
 
 class UsersService {
     async getUsers() {
-        const url = `${API_URL}`;
+        const url = `${API_URL}?populate=*`;
         const response = await fetch(url);
         return response.json();
     }
     async getUser(id) {
-        const url = `${API_URL}/${id}`;
+        const url = `${API_URL}/${id}?populate=*`;
         const response = await fetch(url);
         return response.json();
     }
@@ -24,7 +24,7 @@ class UsersService {
         return response.json();
     }
     async updateUser(id, user) {
-        const url = `${API_URL}/${id}`;
+        const url = `${API_URL}/${id}?populate=*`;
         const response = await fetch(url, {
             method: 'PUT',
             body: JSON.stringify(user),
@@ -35,7 +35,7 @@ class UsersService {
         return response.json();
     }
     async deleteUser(id) {
-        const url = `${API_URL}/${id}`;
+        const url = `${API_URL}/${id}?populate=*`;
         const response = await fetch(url, {
             method: 'DELETE'
         });

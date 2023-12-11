@@ -18,11 +18,10 @@
     "Apellido": {
       "type": "string"
     },
-    "eventos": {
+    "eventoId": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::evento.evento",
-      "inversedBy": "voluntarios"
+      "relation": "oneToMany",
+      "target": "api::evento.evento"
     }
   }
 }

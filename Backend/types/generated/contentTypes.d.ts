@@ -362,78 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiEventoEvento extends Schema.CollectionType {
-  collectionName: 'eventos';
-  info: {
-    singularName: 'evento';
-    pluralName: 'eventos';
-    displayName: 'evento';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Nombre: Attribute.String;
-    voluntarios: Attribute.Relation<
-      'api::evento.evento',
-      'manyToMany',
-      'api::voluntario.voluntario'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::evento.evento',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::evento.evento',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiVoluntarioVoluntario extends Schema.CollectionType {
-  collectionName: 'voluntarios';
-  info: {
-    singularName: 'voluntario';
-    pluralName: 'voluntarios';
-    displayName: 'Voluntario';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Nombre: Attribute.String;
-    Apellido: Attribute.String;
-    eventos: Attribute.Relation<
-      'api::voluntario.voluntario',
-      'manyToMany',
-      'api::evento.evento'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::voluntario.voluntario',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::voluntario.voluntario',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -659,7 +587,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -687,6 +614,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    informacionContacto: Attribute.String;
+    proyectos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::proyecto.proyecto'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -749,6 +682,466 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiActividadActividad extends Schema.CollectionType {
+  collectionName: 'actividads';
+  info: {
+    singularName: 'actividad';
+    pluralName: 'actividads';
+    displayName: 'Actividad';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    descripcion: Attribute.String;
+    horario: Attribute.String;
+    lugar: Attribute.String;
+    horarioHora: Attribute.Date;
+    coordinadorId: Attribute.Relation<
+      'api::actividad.actividad',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    tipo: Attribute.String;
+    objetivo: Attribute.String;
+    usuariosBeneficiados: Attribute.Relation<
+      'api::actividad.actividad',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    costo: Attribute.Decimal;
+    archivoAdjunto: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::actividad.actividad',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::actividad.actividad',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAsistenciaAsistencia extends Schema.CollectionType {
+  collectionName: 'asistencias';
+  info: {
+    singularName: 'asistencia';
+    pluralName: 'asistencias';
+    displayName: 'Asistencia';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    asistencia: Attribute.Boolean;
+    userId: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    fecha: Attribute.Date;
+    actividadId: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToMany',
+      'api::actividad.actividad'
+    >;
+    evento_institucionalsId: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToMany',
+      'api::eventos-institucionale.eventos-institucionale'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBecaBeca extends Schema.CollectionType {
+  collectionName: 'becas';
+  info: {
+    singularName: 'beca';
+    pluralName: 'becas';
+    displayName: 'Beca';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    criterios: Attribute.String;
+    usuarioId: Attribute.Relation<
+      'api::beca.beca',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    tipoBeca: Attribute.String;
+    modtoCobertura: Attribute.Decimal;
+    actividadId: Attribute.Relation<
+      'api::beca.beca',
+      'oneToMany',
+      'api::actividad.actividad'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::beca.beca', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::beca.beca', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiConvenioConvenio extends Schema.CollectionType {
+  collectionName: 'convenios';
+  info: {
+    singularName: 'convenio';
+    pluralName: 'convenios';
+    displayName: 'Convenio';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    entidad: Attribute.String;
+    entidadAsoc: Attribute.String;
+    objetivoConvenio: Attribute.Text;
+    inicio: Attribute.Date;
+    fin: Attribute.Date;
+    estado: Attribute.String;
+    proyectoId: Attribute.Relation<
+      'api::convenio.convenio',
+      'oneToMany',
+      'api::proyecto.proyecto'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::convenio.convenio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::convenio.convenio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEventoEvento extends Schema.CollectionType {
+  collectionName: 'eventos';
+  info: {
+    singularName: 'evento';
+    pluralName: 'eventos';
+    displayName: 'Evento';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Nombre: Attribute.String;
+    descripcion: Attribute.Text;
+    fecha: Attribute.Date;
+    lugar: Attribute.String;
+    organizadorId: Attribute.Relation<
+      'api::evento.evento',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::evento.evento',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::evento.evento',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEventosInstitucionaleEventosInstitucionale
+  extends Schema.CollectionType {
+  collectionName: 'eventos_institucionales';
+  info: {
+    singularName: 'eventos-institucionale';
+    pluralName: 'eventos-institucionales';
+    displayName: 'Evento_Institucional';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    presentacion: Attribute.Text;
+    contenido: Attribute.Text;
+    requisitos: Attribute.Text;
+    ubicacion: Attribute.String;
+    expositorEncargado: Attribute.String;
+    tema: Attribute.String;
+    facultadId: Attribute.Relation<
+      'api::eventos-institucionale.eventos-institucionale',
+      'oneToMany',
+      'api::faculdad.faculdad'
+    >;
+    duracion: Attribute.String;
+    modalidad: Attribute.String;
+    vacantes: Attribute.Integer;
+    invesion: Attribute.Decimal;
+    certificacion: Attribute.String;
+    fechaInicio: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::eventos-institucionale.eventos-institucionale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::eventos-institucionale.eventos-institucionale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFaculdadFaculdad extends Schema.CollectionType {
+  collectionName: 'faculdads';
+  info: {
+    singularName: 'faculdad';
+    pluralName: 'faculdads';
+    displayName: 'faculdad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    descripcion: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::faculdad.faculdad',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::faculdad.faculdad',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiInscripcionInscripcion extends Schema.CollectionType {
+  collectionName: 'inscripcions';
+  info: {
+    singularName: 'inscripcion';
+    pluralName: 'inscripcions';
+    displayName: 'Inscripcion';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    userId: Attribute.Relation<
+      'api::inscripcion.inscripcion',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    fechaInscripcion: Attribute.Date;
+    estado: Attribute.String;
+    actividadId: Attribute.Relation<
+      'api::inscripcion.inscripcion',
+      'oneToMany',
+      'api::actividad.actividad'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::inscripcion.inscripcion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::inscripcion.inscripcion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProyectoProyecto extends Schema.CollectionType {
+  collectionName: 'proyectos';
+  info: {
+    singularName: 'proyecto';
+    pluralName: 'proyectos';
+    displayName: 'Proyecto';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    descripcion: Attribute.Text;
+    inicio: Attribute.Date;
+    fin: Attribute.Date;
+    estado: Attribute.String;
+    miembros: Attribute.String;
+    informeFinal: Attribute.String;
+    usersIds: Attribute.Relation<
+      'api::proyecto.proyecto',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    tipoProyecto: Attribute.String;
+    faculdadId: Attribute.Relation<
+      'api::proyecto.proyecto',
+      'oneToMany',
+      'api::faculdad.faculdad'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::proyecto.proyecto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::proyecto.proyecto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReconocimientoReconocimiento extends Schema.CollectionType {
+  collectionName: 'reconocimientos';
+  info: {
+    singularName: 'reconocimiento';
+    pluralName: 'reconocimientos';
+    displayName: 'Reconocimiento';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    tipoReconocimiento: Attribute.String;
+    usuarioId: Attribute.Relation<
+      'api::reconocimiento.reconocimiento',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    eventoId: Attribute.Relation<
+      'api::reconocimiento.reconocimiento',
+      'oneToMany',
+      'api::evento.evento'
+    >;
+    fecha: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::reconocimiento.reconocimiento',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::reconocimiento.reconocimiento',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVoluntarioVoluntario extends Schema.CollectionType {
+  collectionName: 'voluntarios';
+  info: {
+    singularName: 'voluntario';
+    pluralName: 'voluntarios';
+    displayName: 'Voluntario';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Nombre: Attribute.String;
+    Apellido: Attribute.String;
+    eventoId: Attribute.Relation<
+      'api::voluntario.voluntario',
+      'oneToMany',
+      'api::evento.evento'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::voluntario.voluntario',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::voluntario.voluntario',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -759,14 +1152,23 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::evento.evento': ApiEventoEvento;
-      'api::voluntario.voluntario': ApiVoluntarioVoluntario;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::actividad.actividad': ApiActividadActividad;
+      'api::asistencia.asistencia': ApiAsistenciaAsistencia;
+      'api::beca.beca': ApiBecaBeca;
+      'api::convenio.convenio': ApiConvenioConvenio;
+      'api::evento.evento': ApiEventoEvento;
+      'api::eventos-institucionale.eventos-institucionale': ApiEventosInstitucionaleEventosInstitucionale;
+      'api::faculdad.faculdad': ApiFaculdadFaculdad;
+      'api::inscripcion.inscripcion': ApiInscripcionInscripcion;
+      'api::proyecto.proyecto': ApiProyectoProyecto;
+      'api::reconocimiento.reconocimiento': ApiReconocimientoReconocimiento;
+      'api::voluntario.voluntario': ApiVoluntarioVoluntario;
     }
   }
 }

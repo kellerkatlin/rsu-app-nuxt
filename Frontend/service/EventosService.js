@@ -4,17 +4,30 @@ const API_URL = import.meta.env.VITE_API_URL + '/eventos';
 class EventosService {
     async getPageSize() {
         const url = `${API_URL}`;
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: localStorage.getItem('auth._token.local')
+            }
+        });
         const data = await response.json();
         const total = data.meta.pagination.total;
         return total;
     }
 
     async getEventos(page, pageSize) {
-        const url = `${API_URL}?populate=voluntarios&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
+        const url = `${API_URL}?pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
 
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: 'application/json',
+                    Authorization: localStorage.getItem('auth._token.local')
+                }
+            });
             const data = await response.json();
 
             return data;
@@ -36,7 +49,7 @@ class EventosService {
             headers: {
                 'Content-Type': 'application/json',
                 accept: 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('auth._token.local') || ''
+                Authorization: localStorage.getItem('auth._token.local')
                 // como indico el rol para poder crear eventos
             }
         });
@@ -48,7 +61,9 @@ class EventosService {
             method: 'PUT',
             body: JSON.stringify(evento),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                accept: 'application/json',
+                Authorization: localStorage.getItem('auth._token.local')
             }
         });
         return response.json();
@@ -56,7 +71,12 @@ class EventosService {
     async deleteEvento(id) {
         const url = `${API_URL}/${id}`;
         const response = await fetch(url, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                accept: 'application/json',
+                Authorization: localStorage.getItem('auth._token.local')
+            }
         });
         return response.json();
     }

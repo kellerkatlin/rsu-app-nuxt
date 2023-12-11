@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reconocimientos",
+  "info": {
+    "singularName": "reconocimiento",
+    "pluralName": "reconocimientos",
+    "displayName": "Reconocimiento",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tipoReconocimiento": {
+      "type": "string"
+    },
+    "usuarioId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "eventoId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::evento.evento"
+    },
+    "fecha": {
+      "type": "date"
+    }
+  }
+}

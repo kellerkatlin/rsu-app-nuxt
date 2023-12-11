@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "actividads",
+  "info": {
+    "singularName": "actividad",
+    "pluralName": "actividads",
+    "displayName": "Actividad",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "horario": {
+      "type": "string"
+    },
+    "lugar": {
+      "type": "string"
+    },
+    "horarioHora": {
+      "type": "date"
+    },
+    "coordinadorId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "tipo": {
+      "type": "string"
+    },
+    "objetivo": {
+      "type": "string"
+    },
+    "usuariosBeneficiados": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "costo": {
+      "type": "decimal"
+    },
+    "archivoAdjunto": {
+      "type": "string"
+    }
+  }
+}

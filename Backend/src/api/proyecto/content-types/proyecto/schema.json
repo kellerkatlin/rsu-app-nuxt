@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "proyectos",
+  "info": {
+    "singularName": "proyecto",
+    "pluralName": "proyectos",
+    "displayName": "Proyecto",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "text"
+    },
+    "inicio": {
+      "type": "date"
+    },
+    "fin": {
+      "type": "date"
+    },
+    "estado": {
+      "type": "string"
+    },
+    "miembros": {
+      "type": "string"
+    },
+    "informeFinal": {
+      "type": "string"
+    },
+    "usersIds": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "proyectos"
+    },
+    "tipoProyecto": {
+      "type": "string"
+    },
+    "faculdadId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::faculdad.faculdad"
+    }
+  }
+}

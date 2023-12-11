@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asistencias",
+  "info": {
+    "singularName": "asistencia",
+    "pluralName": "asistencias",
+    "displayName": "Asistencia",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "asistencia": {
+      "type": "boolean"
+    },
+    "userId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "fecha": {
+      "type": "date"
+    },
+    "actividadId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::actividad.actividad"
+    },
+    "evento_institucionalsId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::eventos-institucionale.eventos-institucionale"
+    }
+  }
+}

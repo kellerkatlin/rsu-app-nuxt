@@ -152,5 +152,5 @@ const onSortChange = (event) => {
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/demo/styles/badges.scss';
+@import '@/assets/layout/styles/theme/lara-light-indigo/theme.css';
 </style>

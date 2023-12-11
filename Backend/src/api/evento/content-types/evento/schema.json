@@ -4,7 +4,8 @@
   "info": {
     "singularName": "evento",
     "pluralName": "eventos",
-    "displayName": "evento"
+    "displayName": "Evento",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,11 +15,19 @@
     "Nombre": {
       "type": "string"
     },
-    "voluntarios": {
+    "descripcion": {
+      "type": "text"
+    },
+    "fecha": {
+      "type": "date"
+    },
+    "lugar": {
+      "type": "string"
+    },
+    "organizadorId": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::voluntario.voluntario",
-      "mappedBy": "eventos"
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
