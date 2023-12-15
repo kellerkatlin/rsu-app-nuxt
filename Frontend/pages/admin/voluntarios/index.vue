@@ -24,10 +24,7 @@ async function loadVoluntarios(page) {
         console.log(pagination.value.page);
         const response = await VoluntariosService.getVoluntarios(pagination.value.page, pagination.value.pageSize);
         voluntarios.value = response.data;
-        if (voluntario.value && voluntario.value.attributes.eventoId) {
-            selectedEvent.value = voluntario.value.attributes.eventoId;
-        }
-        console.log(response.data);
+        console.log(selectedEvent.value);
     } catch (error) {
         console.error('An error occurred:', error);
         toast.add({
@@ -64,8 +61,16 @@ onMounted(async () => {
 const editVoluntario = async (voluntarioId) => {
     const response = await VoluntariosService.getVoluntario(voluntarioId);
     voluntario.value = response.data;
+    if (voluntario.value && voluntario.value.attributes.eventoId.data.length > 0) {
+        selectedEvent.value = voluntario.value.attributes.eventoId.data[0];
+    } else {
+        // Si el voluntario no tiene ningún evento asignado, establecemos selectedEvent a un valor predeterminado
+        selectedEvent.value = { attributes: { Nombre: null } };
+    }
+
     voluntarioDialog.value = true;
     isUpdateOperation.value = true;
+    console.log(selectedEvent.value);
 };
 const openNew = () => {
     voluntario.value = { attributes: {} };
@@ -234,11 +239,17 @@ const logout = async () => {
                                     </span>
                                 </div>
                             </div>
+
                             <div class="my-3 field col-12 md:col-4">
-                                <span class="p-float-label">
-                                    <Dropdown id="evento" v-model="selectedEvent" :options="eventos" optionLabel="attributes.Nombre"></Dropdown>
-                                    <label for="evento">Evento</label>
-                                </span>
+                                <div class="p-inputgroup">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-user"></i>
+                                    </span>
+                                    <span class="p-float-label">
+                                        <Dropdown id="evento" v-model="selectedEvent" :options="eventos" optionLabel="attributes.Nombre" placeholder="Seleccionar evento"></Dropdown>
+                                        <label for="evento">Evento</label>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 

@@ -698,7 +698,6 @@ export interface ApiActividadActividad extends Schema.CollectionType {
     descripcion: Attribute.String;
     horario: Attribute.String;
     lugar: Attribute.String;
-    horarioHora: Attribute.Date;
     coordinadorId: Attribute.Relation<
       'api::actividad.actividad',
       'oneToMany',
@@ -712,7 +711,10 @@ export interface ApiActividadActividad extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     costo: Attribute.Decimal;
-    archivoAdjunto: Attribute.String;
+    imagen: Attribute.Media;
+    archivoAdjunto: Attribute.Media;
+    fecha: Attribute.Date;
+    hora: Attribute.Time;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

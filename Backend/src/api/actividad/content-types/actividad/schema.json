@@ -24,9 +24,6 @@
     "lugar": {
       "type": "string"
     },
-    "horarioHora": {
-      "type": "date"
-    },
     "coordinadorId": {
       "type": "relation",
       "relation": "oneToMany",
@@ -46,8 +43,33 @@
     "costo": {
       "type": "decimal"
     },
+    "imagen": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "archivoAdjunto": {
-      "type": "string"
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "fecha": {
+      "type": "date"
+    },
+    "hora": {
+      "type": "time"
     }
   }
 }

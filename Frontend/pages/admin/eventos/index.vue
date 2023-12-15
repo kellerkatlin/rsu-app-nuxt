@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import EventosService from '@/service/EventosService';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
+import { formatFecha} from '@/components/FormatoFecha'
 
 const toast = useToast();
 const router = useRouter();
@@ -109,16 +110,6 @@ const logout = async () => {
 function handlePageChange(event) {
     const page = event.page + 1;
     loadEventos(page);
-}
-const formatFecha = (dateString) => {
-    if (!dateString) {
-        return 'N/A';
-    }
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
 };
 </script>
 

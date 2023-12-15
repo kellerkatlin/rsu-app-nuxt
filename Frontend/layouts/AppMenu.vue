@@ -7,7 +7,7 @@ const model = ref([
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
     },
     {
-        label: 'UI Components',
+        label: 'RSU',
         items: [
 
             {
@@ -24,6 +24,11 @@ const model = ref([
                 label: 'Eventos',
                 icon: 'pi pi-fw pi-id-card',
                 to: '/admin/eventos'
+            },
+            {
+                label: 'Actividades',
+                icon: 'pi pi-fw pi-id-card',
+                to: '/admin/actividades'
             },
             {
                 label: 'Form Layout',
