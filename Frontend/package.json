@@ -19,7 +19,7 @@
     "dependencies": {
         "@nuxtjs/dotenv": "^1.4.1",
         "@pinia/nuxt": "^0.5.1",
-        "chart.js": "3.3.2",
+        "chart.js": "3.9.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "dotenv": "^16.3.1",
