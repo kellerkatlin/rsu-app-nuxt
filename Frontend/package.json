@@ -29,7 +29,7 @@
         "primeicons": "^6.0.1",
         "primevue": "^3.39.0",
         "radix-vue": "^1.2.4",
-        "soap": "^1.0.0",
+        "soap": "^1.1.11",
         "tailwind-merge": "^2.1.0",
         "tailwindcss-animate": "^1.0.7"
     },
